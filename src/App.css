@@ -138,3 +138,24 @@
 .btn-cancel:hover { border-color:var(--text);color:var(--text); }
 .btn-save { padding:7px 14px;border-radius:5px;background:var(--text);border:none;font-family:'Sora',sans-serif;font-size:12px;font-weight:500;color:white;cursor:pointer;transition:opacity 0.1s; }
 .btn-save:hover { opacity:0.82; }
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .sidebar { display:none; }
+  .main { padding:24px 16px; }
+  .lock-card { width:auto;margin:16px;padding:32px 24px; }
+  .persons-grid { grid-template-columns:1fr;max-width:none; }
+  .page-title { font-size:22px; }
+  .doc-list { max-width:none; }
+  .doc-row { gap:8px;padding:10px 12px; }
+  .doc-action { display:none; }
+  .pdf-bar { padding:10px 12px;gap:8px; }
+  .pdf-ext-link { display:none; }
+  .pdf-doc-title { font-size:13px; }
+  .pdf-image-container { padding:12px; }
+  .pdf-body.dl-compact .pdf-image-container img { max-width:280px;max-height:200px; }
+  .modal-box { width:calc(100% - 32px);max-width:440px; }
+  .detail-head { gap:10px; }
+  .det-name { font-size:17px; }
+  .det-avatar { width:40px;height:40px;font-size:14px; }
+}
