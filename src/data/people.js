@@ -1,4 +1,4 @@
-export const PASSWORD = "09020110";
+export const PASSWORD = "0902110";
 
 export const people = {
   henry: {
