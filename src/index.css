@@ -1,0 +1,9 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: #ffffff;
+  color: #191918;
+  min-height: 100vh;
+  margin: 0;
+}
