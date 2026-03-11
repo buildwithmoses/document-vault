@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import './App.css';
 import LockScreen from './components/LockScreen';
 import Sidebar from './components/Sidebar';
@@ -7,16 +7,8 @@ import DetailView from './components/DetailView';
 import PdfViewer from './components/PdfViewer';
 import UploadModal from './components/UploadModal';
 
-const SESSION_TTL = 1 * 60 * 1000; // 1 minute
-
-function isSessionValid() {
-  const ts = sessionStorage.getItem('vault_auth_ts');
-  if (!ts) return false;
-  return Date.now() - Number(ts) < SESSION_TTL;
-}
-
 function App() {
-  const [screen, setScreen] = useState(() => isSessionValid() ? 'app' : 'lock');
+  const [screen, setScreen] = useState('lock'); // 'lock' | 'app' | 'pdf'
   const [activeView, setActiveView] = useState('home'); // 'home' | 'detail'
   const [activePerson, setActivePerson] = useState(null);
   const [uploaded, setUploaded] = useState({});
@@ -28,26 +20,6 @@ function App() {
 
   // Upload modal state
   const [uploadModal, setUploadModal] = useState(null); // { personKey, doc }
-
-  const lock = useCallback(() => {
-    sessionStorage.removeItem('vault_auth_ts');
-    setScreen('lock');
-  }, []);
-
-  const handleUnlock = useCallback(() => {
-    sessionStorage.setItem('vault_auth_ts', String(Date.now()));
-    setScreen('app');
-  }, []);
-
-  // Auto-lock when session expires
-  useEffect(() => {
-    if (screen === 'lock') return;
-    const ts = Number(sessionStorage.getItem('vault_auth_ts') || 0);
-    const remaining = SESSION_TTL - (Date.now() - ts);
-    if (remaining <= 0) { lock(); return; }
-    const timer = setTimeout(lock, remaining);
-    return () => clearTimeout(timer);
-  }, [screen, lock]);
 
   const showHome = () => {
     setActiveView('home');
@@ -90,7 +62,7 @@ function App() {
 
   // Lock screen
   if (screen === 'lock') {
-    return <LockScreen onUnlock={handleUnlock} />;
+    return <LockScreen onUnlock={() => setScreen('app')} />;
   }
 
   // PDF viewer
